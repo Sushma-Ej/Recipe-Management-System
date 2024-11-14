@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='styles.css') }}"
+    />
+    <style>
+      body {
+        background-image: url("/static/images/view5.jpg");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        color: #333;
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+      }
+      .container {
+        max-width: 500px;
+        margin: 50px 0 50px 20px; /* Aligns to the left */
+        padding: 20px;
+        background-color: rgba(255, 255, 255, 0.9);
+        border-radius: 10px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      /* Star rating styles */
+      .star-rating {
+        direction: rtl; /* Reverse the order for easier styling */
+        display: inline-block;
+      }
+      .star-rating input {
+        display: none; /* Hide the radio buttons */
+      }
+      .star-rating label {
+        font-size: 30px; /* Adjust star size */
+        color: #ccc; /* Default star color */
+        cursor: pointer; /* Change cursor on hover */
+      }
+      .star-rating input:checked ~ label {
+        color: #f5b30b; /* Color of selected stars */
+      }
+      .star-rating label:hover,
+      .star-rating label:hover ~ label {
+        color: #f5b30b; /* Color of stars on hover */
+      }
+    </style>
+    <title>{{ recipe[1] }} - Recipe Details</title>
+  </head>
+  <body>
+    <header>
+      <h1>{{ recipe[1] }} - Recipe Details</h1>
+    </header>
+    <main>
+      <h2>Recipe Information</h2>
+      <p>Prep Time: {{ recipe[2] }}</p>
+      <p>Cook Time: {{ recipe[3] }}</p>
+      <p>Servings: {{ recipe[4] }}</p>
+      <p>Total Time: {{ recipe[5] }}</p>
+
+      <!-- New Section: Instructions -->
+      <h3>Instructions</h3>
+      <p>{{ recipe[10] }}</p>
+
+      <h3>Recipe URL</h3>
+      <p>
+        {% if recipe[7] %}
+        <a href="{{ recipe[6] }}" target="_blank">{{ recipe[6] }}</a>
+        {% else %} No URL available for this recipe. {% endif %}
+      </p>
+
+      <!-- New Section: Nutritional Information -->
+      <h3>Nutritional Information</h3>
+      {% if nutritional_info %}
+      <p>Calories: {{ nutritional_info[1] }}</p>
+      <p>Carbs: {{ nutritional_info[2] }}</p>
+      <p>Proteins: {{ nutritional_info[3] }}</p>
+      <p>Fats: {{ nutritional_info[4] }}</p>
+      {% else %}
+      <p>No nutritional information available.</p>
+      {% endif %}
+
+      <!-- New Section: Average Rating -->
+      <h3>Average Rating</h3>
+      <p>
+        {% if recipe[13] is not none %} Average Rating: {{ recipe[13] }} / 5 {%
+        else %} No ratings available yet. {% endif %}
+      </p>
+
+      <!-- New Section: Ingredients -->
+      <h3>Ingredients</h3>
+      <ul>
+        {% if ingredients %} {% for ingredient in ingredients %}
+        <li>{{ ingredient[1] }}</li>
+        {% endfor %} {% else %}
+        <li>No ingredients available.</li>
+        {% endif %}
+      </ul>
+
+      <h3>Comments</h3>
+      <ul>
+        {% for comment in comments %}
+        <li>{{ comment[1] }}</li>
+        {% endfor %}
+      </ul>
+
+      <h3>Add a Comment</h3>
+      <form
+        method="POST"
+        action="{{ url_for('add_comment', recipe_id=recipe[0]) }}"
+      >
+        <textarea name="comment" rows="4" required></textarea>
+        <button type="submit">Submit Comment</button>
+      </form>
+
+      <h3>Rate this Recipe (out of 5)</h3>
+      <form
+        method="POST"
+        action="{{ url_for('add_rating', recipe_id=recipe[0]) }}"
+      >
+        <div class="star-rating" style="display: flex; justify-content: left">
+          <input type="radio" id="star1" name="rating" value="1" required />
+          <label for="star1">&#9733;</label>
+          <input type="radio" id="star2" name="rating" value="2" />
+          <label for="star2">&#9733;</label>
+          <input type="radio" id="star3" name="rating" value="3" />
+          <label for="star3">&#9733;</label>
+          <input type="radio" id="star4" name="rating" value="4" />
+          <label for="star4">&#9733;</label>
+          <input type="radio" id="star5" name="rating" value="5" />
+          <label for="star5">&#9733;</label>
+        </div>
+        <button type="submit">Rate</button>
+      </form>
+
+      <style>
+        .star-rating {
+          display: flex; /* Keep the stars in a horizontal line */
+          justify-content: flex-start; /* Align stars to the left */
+        }
+
+        .star-rating input {
+          display: none; /* Hides the radio inputs */
+        }
+
+        .star-rating label {
+          font-size: 2rem; /* Size of the stars */
+          color: lightgray; /* Default star color */
+          cursor: pointer; /* Cursor changes to pointer on hover */
+          transition: color 0.3s; /* Smooth transition for color change */
+        }
+
+        /* Highlight stars based on hover */
+        .star-rating label:hover,
+        .star-rating label:hover ~ label {
+          color: gold; /* Make hovered star and all previous stars gold */
+        }
+
+        /* Keep the checked star and previous stars gold */
+        .star-rating input:checked ~ label {
+          color: gold; /* Color for checked stars */
+        }
+
+        .star-rating input:checked + label {
+          color: gold; /* Ensure the current star stays gold */
+        }
+
+        /* Highlight stars left of checked input */
+        .star-rating input:checked + label,
+        .star-rating input:checked + label ~ label {
+          color: gold; /* Ensure the current rating and previous stars stay gold */
+        }
+      </style>
+
+      <!-- <h3>Ratings</h3>
+      <ul>
+        {% for rating in ratings %}
+        <li>Rating: {{ rating[1] }}</li>
+        {% endfor %}
+      </ul> -->
+    </main>
+  </body>
+</html>

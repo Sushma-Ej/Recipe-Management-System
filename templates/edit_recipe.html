@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <title>Edit Recipe</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: white;
+            margin-bottom: 20px;
+        }
+        form {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        label {
+            font-weight: bold;
+            color: #555;
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="text"],
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        textarea {
+            resize: vertical;
+            height: 150px;
+        }
+        input[type="submit"],
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+        input[type="submit"]:hover,
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+    <script>
+        function calculateTotalTime() {
+            const prepTime = parseInt(document.getElementById('prep_time').value) || 0;
+            const cookTime = parseInt(document.getElementById('cook_time').value) || 0;
+            document.getElementById('total_time').value = prepTime + cookTime;
+        }
+    </script>
+</head>
+<body>
+    <header>
+        <h1>Edit Recipe: {{ recipe[1] }}</h1>
+    </header>
+    
+    <main>
+      <form method="POST" action="{{ url_for('edit_recipe', recipe_id=recipe[0]) }}">
+        <!-- Recipe Details -->
+            <label for="name">Recipe Name:</label>
+            <input type="text" id="name" name="name" value="{{ recipe[1] }}" required>
+
+            <label for="prep_time">Prep Time:</label>
+            <input type="text" id="prep_time" name="prepTime" value="{{ recipe[2] }}" required oninput="calculateTotalTime()">
+
+            <label for="cook_time">Cook Time:</label>
+            <input type="text" id="cook_time" name="cookTime" value="{{ recipe[3] }}" required oninput="calculateTotalTime()">
+
+            <label for="servings">Servings:</label>
+            <input type="text" id="servings" name="servings" value="{{ recipe[4] }}" required>
+            
+            <label for="total_time">Total Time:</label>
+            <input type="text" id="total_time" name="totalTime" value="{{ recipe[5] }}" readonly>
+
+            <label for="url">Recipe URL:</label>
+            <input type="text" id="url" name="url" value="{{ recipe[6] }}">
+
+            <label for="course">Course:</label>
+            <input type="text" id="course" name="course" value="{{ recipe[7] }}" required>
+
+            <label for="cuisine">Cuisine:</label>
+            <input type="text" id="cuisine" name="cuisine" value="{{ recipe[8] }}" required>
+
+            <label for="diet">Diet:</label>
+            <input type="text" id="diet" name="diet" value="{{ recipe[9] }}" required>
+
+            <label for="instructions">Instructions:</label>
+            <textarea id="instructions" name="instructions" required>{{ recipe[10] }}</textarea>
+
+            <!-- Nutritional Information -->
+            <h3>Nutritional Information</h3>
+            <label for="calories">Calories:</label>
+            <input type="number" name="calories" step="0.01" min="0" value="{{ nutritional_info[1] if nutritional_info else '' }}">
+
+            <label for="carbs">Carbs:</label>
+            <input type="number" name="carbs" step="0.01" min="0" value="{{ nutritional_info[2] if nutritional_info else '' }}">
+
+            <label for="proteins">Proteins:</label>
+            <input type="number" name="proteins" step="0.01" min="0" value="{{ nutritional_info[3] if nutritional_info else '' }}">
+
+            <label for="fats">Fats:</label>
+            <input type="number" name="fats" step="0.01" min="0" value="{{ nutritional_info[4] if nutritional_info else '' }}">
+
+            <!-- Ingredients -->
+            <h3>Ingredients</h3>
+            {% for ingredient in ingredients %}
+                <label for="ingredient_name">Ingredient {{ loop.index }}:</label>
+                <input type="text" name="ingredients" value="{{ ingredient }}">
+            {% endfor %}
+            <input type="text" name="new_ingredient" placeholder="Add another ingredient (optional)">
+
+            <button type="submit">Save Changes</button>
+        </form>
+    </main>
+</body>
+</html>

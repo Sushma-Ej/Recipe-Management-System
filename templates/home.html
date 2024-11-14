@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='styles.css') }}"
+    />
+    <title>Recipe Manager - Home</title>
+    <style>
+      /* Fullscreen Background Image */
+      body {
+        background: url("{{ url_for('static', filename='images/background.jpg') }}")
+          no-repeat center center fixed;
+        background-size: cover;
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        color: #fff;
+      }
+
+      /* Content Alignment */
+      .content {
+        position: relative;
+        z-index: 2;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center; /* Center horizontally */
+        justify-content: center; /* Center vertically */
+        color: #e9f90a;
+        text-align: center;
+      }
+
+      /* Header and Title */
+      header {
+        width: 100%;
+        padding: 10px;
+        background-color: rgba(0, 0, 0, 0.8);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-sizing: border-box;
+      }
+
+      header h1 {
+        font-size: 2em;
+        margin: 0;
+        color: #fff;
+      }
+
+      nav ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        gap: 20px;
+      }
+
+      nav ul li {
+        display: inline;
+      }
+
+      nav ul li a {
+        color: #fff;
+        text-decoration: none;
+        font-weight: bold;
+        position: relative;
+        cursor: pointer;
+      }
+
+      /* Welcome Section */
+      .welcome-section h2 {
+        font-size: 3em;
+        color: #f4dc06;
+        margin-bottom: 10px;
+      }
+
+      .welcome-section p {
+        font-size: 1.5em;
+        color: #07fffb;
+        margin-bottom: 20px;
+      }
+
+      /* Centered Category Button */
+      .category-button-container {
+        margin-top: 20px;
+      }
+
+      .category-button {
+        background-color: #3498db;
+        color: #fff;
+        padding: 15px 30px;
+        font-size: 1.2em;
+        border: none;
+        border-radius: 8px;
+        text-decoration: none;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+
+      .category-button:hover {
+        background-color: #2980b9;
+      }
+
+      /* Footer Sections */
+      .footer-section {
+        background-color: rgba(0, 0, 0, 0.8);
+        padding: 20px;
+        margin-top: 50px;
+        color: #fff;
+        text-align: left;
+      }
+
+      /* Additional styles for About Us and Contact sections */
+      .footer-section h2 {
+        color: #fff; /* Change the header color to white */
+      }
+
+      .footer-section p {
+        color: #fff; /* Change the paragraph color to white */
+      }
+    </style>
+    <script>
+      function scrollToSection(sectionId) {
+        const section = document.getElementById(sectionId);
+        section.scrollIntoView({ behavior: "smooth" });
+      }
+    </script>
+  </head>
+  <body>
+    <header>
+      <h1>Sizzle & Scroll👨‍🍳</h1>
+      <nav>
+        <ul>
+          {% if session.loggedin %}
+          <li><a href="{{ url_for('logout') }}">Logout</a></li>
+          <li>Welcome, {{ session.username }}!</li>
+          {% else %}
+          <li><a href="{{ url_for('login') }}">Login</a></li>
+          <li><a href="{{ url_for('register') }}">Register</a></li>
+          {% endif %}
+          <li><a onclick="scrollToSection('about-us-section')">About Us</a></li>
+          <li><a onclick="scrollToSection('contact-section')">Contact</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <div class="content">
+      <div class="welcome-section">
+        <h2>Welcome to the Recipe Manager</h2>
+        <p>Discover, rate, and share your favorite recipes.</p>
+      </div>
+
+      <!-- Centered button for categories below welcome section -->
+      <section class="category-button-container">
+        <a href="{{ url_for('categories') }}" class="category-button"
+          >Browse Recipes</a
+        >
+      </section>
+    </div>
+
+    <!-- About Us Section at the bottom of the page -->
+    <div id="about-us-section" class="footer-section">
+      <h2>About Us</h2>
+      <p>
+        Recipe Manager is your go-to platform for discovering and sharing the
+        best recipes from around the world. Whether you're a seasoned chef or a
+        home cook, our community is here to inspire and support you on your
+        culinary journey.
+      </p>
+    </div>
+
+    <!-- Contact Section at the bottom of the page -->
+    <div id="contact-section" class="footer-section">
+      <h2>Contact</h2>
+      <p>
+        Have questions or feedback? We'd love to hear from you! Reach out to us
+        at:
+      </p>
+      <ul>
+        <li>Email: support@recipemanager.com</li>
+        <li>Phone: +1 (123) 456-7890</li>
+        <li>Address: 123 Foodie Lane, Gourmet City, Foodland</li>
+      </ul>
+    </div>
+  </body>
+</html>

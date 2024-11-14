@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='styles.css') }}"
+    />
+    <title>Login</title>
+  </head>
+  <body>
+    <main>
+      <div class="form-container">
+        <h1>Login</h1>
+        <form method="POST" class="login-form">
+          <label for="username">Username:</label>
+          <input type="text" id="username" name="username" required />
+
+          <label for="password">Password:</label>
+          <input type="password" id="password" name="password" required />
+
+          <button type="submit">Login</button>
+        </form>
+
+        {% if msg %}
+        <p class="message">{{ msg }}</p>
+        {% endif %}
+
+        <p>
+          Don't have an account?
+          <a href="{{ url_for('register') }}">Register here</a>.
+        </p>
+      </div>
+    </main>
+
+    <style>
+      /* Centering the container using flexbox */
+      body,
+      html {
+        height: 100%;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+      }
+
+      main {
+        width: 100%;
+        max-width: 400px;
+      }
+
+      .form-container {
+        text-align: center;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+
+      h1 {
+        font-size: 24px;
+        color: white;
+        background-color: #333;
+        padding: 10px;
+        margin: -20px -20px 20px -20px;
+        border-top-left-radius: 8px;
+        border-top-right-radius: 8px;
+      }
+
+      .login-form {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+      }
+
+      label {
+        margin-top: 10px;
+        text-align: left;
+      }
+
+      input {
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        width: 100%;
+        box-sizing: border-box;
+      }
+
+      button {
+        padding: 10px;
+        background-color: #3498db;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      button:hover {
+        background-color: #2980b9;
+      }
+
+      .message {
+        color: red;
+        margin-top: 10px;
+      }
+
+      p {
+        margin-top: 15px;
+      }
+
+      a {
+        color: #3498db;
+        text-decoration: none;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </body>
+</html>
