@@ -21,7 +21,9 @@ Database: MySQL
 
 ### Getting Started
 Clone the repository: git clone https://github.com/Sushma-Ej/Recipe-Management-System.git
+
 Run the application: python app.py
+
 Access the application at http://localhost:5000
 
 ### Demo:
