@@ -3,14 +3,20 @@ In fast-paced kitchens, efficient recipe organization is essential. The Recipe M
 
 #### Features
 • User Authentication: Allows users to register and log in to manage their personal recipe collections.
+
 • Recipe CRUD Operations: Users can create, read, update, and delete recipes.
+
 • Ingredient & Category Search: Easily find recipes by filtering based on ingredients or cuisine categories.
+
 • Rating & Commenting: Users can rate recipes (e.g., 1–5 stars) and add comments to share feedback or cooking tips.
+
 • Responsive UI: A clean and intuitive interface for desktop and mobile devices (if applicable
 
 #### Tech Stack:
 Frontend: HTML5, CSS3
+
 Backend: Python, Flask
+
 Database: MySQL
 
 #### Getting Started
